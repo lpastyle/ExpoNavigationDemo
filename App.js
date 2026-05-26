@@ -1,10 +1,22 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import HomeScreen from './components/HomeScreen';
+import DetailsScreen from './components/DetailsScreen';
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState('home');
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      {currentScreen === 'home' && (
+        <HomeScreen onNavigate={setCurrentScreen} />
+      )}
+      {currentScreen === 'details' && (
+        <DetailsScreen onNavigate={setCurrentScreen} />
+      )}
+
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +25,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
