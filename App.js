@@ -1,29 +1,37 @@
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+// App.js
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './components/HomeScreen';
-import DetailsScreen from './components/DetailsScreen';
+import ListScreen   from './components/ListScreen';
+// createNativeStackNavigator() crée deux composants :
+// - Stack.Navigator : le conteneur de navigation
+// - Stack.Screen    : chaque écran enregistré
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('home');
-
   return (
-    <View style={styles.container}>
-      {currentScreen === 'home' && (
-        <HomeScreen onNavigate={setCurrentScreen} />
-      )}
-      {currentScreen === 'details' && (
-        <DetailsScreen onNavigate={setCurrentScreen} />
-      )}
-
-      <StatusBar style="auto" />
-    </View>
+    // NavigationContainer DOIT envelopper toute l'application
+    // car il gère l'état de navigation
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Accueil"   // écran affiché au démarrage
+        screenOptions={{             // options appliquées à TOUS les écrans
+          headerStyle:      { backgroundColor: '#20232A' },
+          headerTintColor:  '#61DAFB',
+          headerTitleStyle: { fontWeight: 'bold' },
+        }}>
+        <Stack.Screen
+          name="Accueil"
+          component={HomeScreen}
+          options={{ title: 'Accueil' }}
+        />
+        <Stack.Screen
+          name="Liste"
+          component={ListScreen}
+          options={{ title: 'Catalogue' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
