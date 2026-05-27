@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
 const FRAMEWORKS = [
   { id: '1', nom: 'React Native', langage: 'JavaScript', annee: 2015 },
@@ -8,20 +8,29 @@ const FRAMEWORKS = [
   { id: '5', nom: 'Xamarin',      langage: 'C#',         annee: 2011 },
 ];
 
-export default function ListScreen() {
+export default function ListScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={FRAMEWORKS}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <View style={styles.item}>
+          <TouchableOpacity
+            style={styles.item}
+            // navigate() avec paramètres — reçus dans DetailScreen via route.params
+            onPress={() => navigation.navigate('Detail', {
+              id:      item.id,
+              nom:     item.nom,
+              langage: item.langage,
+              annee:   item.annee,
+            })}
+          >
             <View>
               <Text style={styles.itemNom}>{item.nom}</Text>
               <Text style={styles.itemLangage}>{item.langage}</Text>
             </View>
             <Text style={styles.itemAnnee}>{item.annee}</Text>
-          </View>
+          </TouchableOpacity>
         )}
         ItemSeparatorComponent={() =>
           <View style={{ height: 1, backgroundColor: '#E2E8F0' }} />

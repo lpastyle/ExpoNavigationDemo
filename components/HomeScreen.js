@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-// navigation est injecté automatiquement par React Navigation
+// navigation et route sont injectés automatiquement par React Navigation
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
